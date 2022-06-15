@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
+import { toDoState } from './atoms';
+import CreateTodo from './components/CreateTodo';
+import ToDoItem from './components/ToDoItem';
 
 // function TodoList(){
 //     const [todo, setTodo] = useState("");
@@ -21,21 +23,18 @@ import { useForm } from 'react-hook-form';
 //         </div>
 //     )
 // }
-interface IForm{
-    todo : string
-}
+
+
+
 function TodoList(){
-    // register 함수 안에 onBlur, onChange, ref 함수가 있음
-    const {register, handleSubmit } = useForm<IForm>();
-    const onValid = (data: IForm) => {
-        console.log(data.todo)
-    }
+    const toDos = useRecoilValue(toDoState);
     return (
         <div>
-            <form onSubmit={handleSubmit(onValid)}>
-                <input {...register('todo', {required: "Please Write a to do"})} placeholder='Write a to do'/>
-                <button>Add</button>
-            </form>
+            <h1>To Dos</h1>
+            <CreateTodo />
+            <ul>
+                {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
+            </ul>
         </div>
     )
 }

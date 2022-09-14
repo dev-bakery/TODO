@@ -37,7 +37,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Source Sans Pro', sans-serif;
     line-height: 1;
-    background-color: #fff;
+    background-color: #f0efe9;
     color:#000
   }
   menu, ol, ul {

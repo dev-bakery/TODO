@@ -1,7 +1,16 @@
 import { useRecoilValue } from 'recoil';
 import { toDoState } from './atoms';
+import styled from 'styled-components';
 import CreateTodo from './components/CreateTodo';
 import ToDoItem from './components/ToDoItem';
+
+const BoxContents = styled.div`
+    padding:30px;
+`;
+const Title = styled.h1`
+    font-size:25px;
+`;
+
 
 // function TodoList(){
 //     const [todo, setTodo] = useState("");
@@ -29,13 +38,13 @@ import ToDoItem from './components/ToDoItem';
 function TodoList(){
     const toDos = useRecoilValue(toDoState);
     return (
-        <div>
-            <h1>To Dos</h1>
+        <BoxContents>
+            <Title>To Dos</Title>
             <CreateTodo />
             <ul>
                 {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
             </ul>
-        </div>
+        </BoxContents>
     )
 }
 

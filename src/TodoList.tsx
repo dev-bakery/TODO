@@ -3,12 +3,18 @@ import { toDoState } from './atoms';
 import styled from 'styled-components';
 import CreateTodo from './components/CreateTodo';
 import ToDoItem from './components/ToDoItem';
+import SortTodo from './components/SortTodo';
 
 const BoxContents = styled.div`
+    width:500px;
+    margin:0 auto;
     padding:30px;
 `;
 const Title = styled.h1`
     font-size:25px;
+`;
+const ShowTodo = styled.div`
+    margin-top: 20px;
 `;
 
 
@@ -40,10 +46,13 @@ function TodoList(){
     return (
         <BoxContents>
             <Title>To Dos</Title>
+            <ShowTodo>
+                <SortTodo />
+                <ul>
+                    {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
+                </ul>
+            </ShowTodo>
             <CreateTodo />
-            <ul>
-                {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
-            </ul>
         </BoxContents>
     )
 }

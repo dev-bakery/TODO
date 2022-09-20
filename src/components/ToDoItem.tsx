@@ -1,6 +1,19 @@
 import React from 'react'
 import { useSetRecoilState } from 'recoil';
-import { ITodo, toDoState } from '../atoms'
+import { ITodo, toDoState } from '../atoms';
+import styled from 'styled-components';
+
+const ListItem = styled.li`
+    display:flex;
+    padding:5px;
+`;
+const Text = styled.span`
+    flex:1;
+    font-size:14px;
+    line-height:28px;
+`;
+const Button = styled.button`
+`;
 
 function ToDoItem({text, category, id}:ITodo) {
     const setToDos = useSetRecoilState(toDoState);
@@ -12,6 +25,7 @@ function ToDoItem({text, category, id}:ITodo) {
             const targetIndex = oldToDos.findIndex(toDo => toDo.id === id);
             const oldToDo = oldToDos[targetIndex];
             const newToDo = {text, id, category: name};
+            
             return oldToDos;
         })
     }
@@ -22,13 +36,13 @@ function ToDoItem({text, category, id}:ITodo) {
             return newToDo
         })
     }
-    return <li>
-        <span>{text}</span>
-        {category !== "DOING" && <button name='DOING' onClick={onClick}>Doing</button>}
-        {category !== "TODO" && <button name='TODO' onClick={onClick}>To Do</button>}
-        {category !== "DONE" && <button name='DONE' onClick={onClick}>Done</button>}
-        <button onClick={onDelete}>Delete</button>
-    </li>
+    return <ListItem>
+        {category !== "DOING" && <Button name='DOING' onClick={onClick}>Doing</Button>}
+        {category !== "TODO" && <Button name='TODO' onClick={onClick}>To Do</Button>}
+        {category !== "DONE" && <Button name='DONE' onClick={onClick}>Done</Button>}
+        <Text>{text}</Text>
+        <Button onClick={onDelete}>Delete</Button>
+    </ListItem>
 }
 
 export default ToDoItem

@@ -3,10 +3,19 @@ import { toDoState, isLightAtom } from './atoms';
 import styled from 'styled-components';
 import CreateTodo from './components/CreateTodo';
 import ToDoItem from './components/ToDoItem';
+import SortTodo from './components/SortTodo';
 
-
+const BoxContents = styled.div`
+    width:500px;
+    margin:0 auto;
+    padding:30px;
+`;
 const Title = styled.h1`
-    color : ${props => props.theme.textColor}
+    color : ${props => props.theme.textColor};
+    font-size:25px;
+`;
+const ShowTodo = styled.div`
+    margin-top: 20px;
 `;
 const Button = styled.button`
     position: absolute;
@@ -43,14 +52,17 @@ function TodoList() {
     const theme = isLight ? "light" : "dark";
 
     return (
-        <div>
+        <BoxContents>
             <Title>To Dos</Title>
+            <ShowTodo>
+                <SortTodo />
+                <ul>
+                    {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
+                </ul>
+            </ShowTodo>
             <CreateTodo />
-            <ul>
-                {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
-            </ul>
             <Button onClick={() => { setIsLight((prev) => !prev) }}>{theme}</Button>
-        </div>
+        </BoxContents>
     )
 }
 

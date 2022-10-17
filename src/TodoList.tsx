@@ -1,7 +1,18 @@
-import { useRecoilValue } from 'recoil';
-import { toDoState } from './atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { toDoState, isLightAtom } from './atoms';
+import styled from 'styled-components';
 import CreateTodo from './components/CreateTodo';
 import ToDoItem from './components/ToDoItem';
+
+
+const Title = styled.h1`
+    color : ${props => props.theme.textColor}
+`;
+const Button = styled.button`
+    position: absolute;
+    right:0;
+    top:0;
+`;
 
 // function TodoList(){
 //     const [todo, setTodo] = useState("");
@@ -26,15 +37,19 @@ import ToDoItem from './components/ToDoItem';
 
 
 
-function TodoList(){
+function TodoList() {
     const toDos = useRecoilValue(toDoState);
+    const [isLight, setIsLight] = useRecoilState(isLightAtom);
+    const theme = isLight ? "light" : "dark";
+
     return (
         <div>
-            <h1>To Dos</h1>
+            <Title>To Dos</Title>
             <CreateTodo />
             <ul>
                 {toDos.map((toDo) => <ToDoItem key={toDo.id} {...toDo} />)}
             </ul>
+            <Button onClick={() => { setIsLight((prev) => !prev) }}>{theme}</Button>
         </div>
     )
 }

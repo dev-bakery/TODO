@@ -1,5 +1,7 @@
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { lightTheme, darkTheme } from './theme';
+import { isLightAtom } from './atoms';
 import TodoList from './TodoList';
 
 const GlobalStyle = createGlobalStyle`
@@ -37,7 +39,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Source Sans Pro', sans-serif;
     line-height: 1;
-    background-color: #fff;
+    background-color: ${props => props.theme.bgColor};
     color:#000
   }
   menu, ol, ul {
@@ -61,12 +63,15 @@ const GlobalStyle = createGlobalStyle`
     color:inherit;
   }
 `;
-
 function App() {
+
+  const isLight = useRecoilValue(isLightAtom)
   return (
     <>
-      <GlobalStyle/>
-      <TodoList/>
+      <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <TodoList />
+      </ThemeProvider>
     </>
   );
 }
